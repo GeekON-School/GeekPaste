@@ -3,6 +3,10 @@ import tornado.web
 import sqlite3
 import random
 import string
+import os
+
+DB_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+							     'database.sqlite')
 
 def get_id():
     return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
@@ -14,7 +18,7 @@ class MainHandler(tornado.web.RequestHandler):
             self.render('index.html')
         else:
             try:
-                con = sqlite3.connect('database.sqlite')
+                con = sqlite3.connect(DB_PATH)
                 cur = con.cursor()
                 cur.execute('SELECT * FROM codes WHERE id = ?', [id])
                 code = cur.fetchone()
@@ -31,7 +35,7 @@ class MainHandler(tornado.web.RequestHandler):
         if lang is None or code is None:
             self.redirect('/')
         else:
-            con = sqlite3.connect('database.sqlite')
+            con = sqlite3.connect(DB_PATH)
             cur = con.cursor()
 
             id = ''
