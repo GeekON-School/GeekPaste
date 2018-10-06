@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>GeekPaste</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-
-    <title>GeekPaste</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-
-    <!-- Styles -->
-    <!-- Latest compiled and minified CSS -->
-    <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/atom-one-light.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -30,15 +24,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
             integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet"
-          href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/atom-one-light.min.css">
+
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-
+    <script>hljs.initHighlightingOnLoad()</script>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a href="/" class="navbar-brand">GeekPaste</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -60,14 +50,21 @@
 <div class="container" style="margin-top: 30px;">
     <div class="card">
         <div class="card-body" style="padding: 0;">
-            <pre>
-                <code style="padding:10px;" class="{{record[0]}}">{{ record[1] }}</code>
-            </pre>
+            <button
+            class="btn btn-primary btn-sm" id="copy-code" data-clipboard-target="#code"
+            data-toggle="popover" data-placement="right" data-content="Скопировано">
+                Копировать код
+            </button>
+            <pre><code id='code' style="padding:10px;" class="{{record[0]}}">{{ record[1] }}</code></pre>
         </div>
-    </div>
-
-
+    </div>  
 </div>
 
+<script>
+    new ClipboardJS('#copy-code')
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    });
+</script>
 </body>
 </html>
