@@ -14,6 +14,7 @@ def get_id():
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         id = self.get_argument('id', None)
+        
         if id is None:
             self.render('index.html')
         else:
@@ -25,7 +26,14 @@ class MainHandler(tornado.web.RequestHandler):
                 if code == None:
                     raise Exception("error")
                 con.close()
-                self.render('codepage.html', record=code)
+
+                if self.get_argument('raw', None) is not None:
+                    print('raw');
+                    self.add_header('Content-Type', 'text/plain')
+
+                    self.write(str(code[1]))
+                else:
+                    self.render('codepage.html', record=code, id=id)
             except Exception as e:
                 print(e)
                 self.render('notfound.html')
